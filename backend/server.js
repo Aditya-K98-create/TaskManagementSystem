@@ -13,7 +13,7 @@ app.use(express.json());
 
 // ================= MongoDB Connection =================
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB connected successfully!");
   })
@@ -55,7 +55,7 @@ app.put("/api/tasks/:id", async (req, res) => {
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { title, description },
-      { new: true } // updated document return करतो
+      { new: true }
     );
 
     if (!updatedTask) {
@@ -68,6 +68,7 @@ app.put("/api/tasks/:id", async (req, res) => {
     res.status(500).json({ message: "Error updating task" });
   }
 });
+
 // DELETE TASK
 app.delete("/api/tasks/:id", async (req, res) => {
   try {
@@ -88,7 +89,6 @@ app.delete("/api/tasks/:id", async (req, res) => {
     res.status(500).json({ message: "Error deleting task" });
   }
 });
-
 
 // GET ALL TASKS
 app.get("/api/tasks", async (req, res) => {
